@@ -5,19 +5,28 @@ require("dotenv").config();
 
 const app = express();
 
-// Middlewares
+// ================== MIDDLEWARE ==================
 app.use(cors());
 app.use(express.json());
 
-// Test Route
+// ================== TEST ROUTE ==================
 app.get("/", (req, res) => {
   res.send("🚀 SaaS Backend is Running Successfully");
 });
 
-// Port
+// ================== PORT ==================
 const PORT = process.env.PORT || 5000;
 
-// Start Server
-app.listen(PORT, () => {
-  console.log(`Server running on port ${PORT}`);
-});
+// ================== DATABASE CONNECT ==================
+mongoose
+  .connect(process.env.MONGO_URI)
+  .then(() => {
+    console.log("✅ MongoDB Connected");
+    // Server start only after DB connect
+    app.listen(PORT, () => {
+      console.log(`🚀 Server running on port ${PORT}`);
+    });
+  })
+  .catch((err) => {
+    console.error("❌ MongoDB connection error:", err);
+  });

@@ -1,0 +1,5 @@
+create table users (
+  id uuid primary key,
+  plan text,
+  requests_used int
+);

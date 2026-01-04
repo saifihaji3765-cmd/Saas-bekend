@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Future Guard AI</title>
+</head>
+<body>
+  <h1>Future Guard AI</h1>
+  <textarea id="input"></textarea>
+  <button onclick="analyze()">Analyze</button>
+  <pre id="out"></pre>
+
+  <script>
+    async function analyze() {
+      const res = await fetch("/api/analyze", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          user_id: "TEST_USER_ID",
+          business: document.getElementById("input").value
+        })
+      });
+
+      const data = await res.json();
+      document.getElementById("out").innerText =
+        JSON.stringify(data, null, 2);
+    }
+  </script>
+</body>
+</html>
